@@ -112,6 +112,7 @@ a{
 }
 body{
     background-color: #ccc;
+
 }
 header nav{
     width: 100%;
@@ -225,4 +226,9 @@ header .nav-login a{
 }
 .signup-form button:hover{
     background-color: #111;
+}
+.hero{
+
+    display: flex;
+    justify-content: center;
 }

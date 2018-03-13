@@ -14,27 +14,27 @@ if (isset($_POST['submit'])){
         header("location: ../index.php?login=empty");
         exit();
     }else{
-        $sql = "SELECT * FROM users WHERE user_uid= '$uid'";
+        $sql = "SELECT * FROM users WHERE user_uid= '$uid' OR user_email='$uid'";
         $result = mysqli_query($conn, $sql);
         $resultCheck = mysqli_num_rows($result);
         if ($resultCheck < 1){
-            header("location: ../index.php?login=error");
+            header("location: ../index.php?login=firsterror");
             exit();
         }else{
             if ($row = mysqli_fetch_assoc($result)){
                 //dehashing the password
-                $hashedPwdcheck = password_verify($pwd, $row['user_pwd']);
-                if ($hashedPwdcheck == false){
-                    header("location: ../index.php?login=error");
+                $hashedPwdCheck= password_verify($pwd, $row['USER_pwd']);
+                if ($hashedPwdCheck == false){
+                    header("location: ../index.php?login=lasterror");
                     exit();
-                }elseif ($hashedPwdcheck == true){
+                }elseif ($hashedPwdCheck == true){
                     //log  in the user here
-                    $_SESSION['u_id'] = $row['user_id'];
-                    $_SESSION['u_first'] = $row['user_first'];
-                    $_SESSION['u_last'] = $row['user_last'];
-                    $_SESSION['u_email'] = $row['user_email'];
-                    $_SESSION['u_uid'] = $row['user_uid'];
-                    header("location: ../index.php?login=succes");
+                    $_SESSION['u_id'] = $row['USER_id'];
+                    $_SESSION['u_first'] = $row['USER_first'];
+                    $_SESSION['u_last'] = $row['USER_last'];
+                    $_SESSION['u_email'] = $row['USER_email'];
+                    $_SESSION['u_uid'] = $row['USER_uid'];
+                    header("location: ../index.php?login=success");
                     exit();
                 }
             }
