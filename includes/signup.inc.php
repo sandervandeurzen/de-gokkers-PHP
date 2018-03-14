@@ -20,6 +20,7 @@ if (isset($_POST['submit'])){
         //check if input characters are valid
         if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-zA-Z]*$/", $last)){
             header("location: ../signup.php?signup=invalid");
+
             exit();
         }else{
             //check if email is valid

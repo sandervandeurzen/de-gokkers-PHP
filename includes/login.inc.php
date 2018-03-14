@@ -26,6 +26,7 @@ if (isset($_POST['submit'])){
                 $hashedPwdCheck= password_verify($pwd, $row['USER_pwd']);
                 if ($hashedPwdCheck == false){
                     header("location: ../index.php?login=lasterror");
+                    echo '<script>alert("I am an alert box!")</script>';
                     exit();
                 }elseif ($hashedPwdCheck == true){
                     //log  in the user here
