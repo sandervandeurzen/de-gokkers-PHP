@@ -1,6 +1,8 @@
 
 
 <?php
+
+
 error_reporting(E_ERROR | E_PARSE);
 
 //laad de databaseconnector.php in
@@ -14,8 +16,6 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $uid = $_POST['uid'];
     $pwd = $_POST['pwd'];
-
-
 
     if (empty($fname) || empty($lname) || empty($email) || empty($uid)
         || empty($pwd)){
@@ -33,6 +33,7 @@ if (isset($_POST['submit'])) {
                     $query->bindValue(':email', $email);
                     $query->execute();
 
+
                     if($query->rowCount() > 1) {
                         // do your insert
                         header("location: ../includes/DB_Test_connection.php?signup=taken");
@@ -42,11 +43,16 @@ if (isset($_POST['submit'])) {
                         //hashing password
                         $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
                         //trim te space
-                        $words = 'fname, lname, email, pwd';
+                        $words = 'fname, lname, uid, email, pwd';
                         $words = trim($words);
+                        $fname = trim($fname);
+                        $lname = trim($lname);
+                        $email = trim($email);
+                        $uid = trim($uid);
+                        $pwd = trim($pwd);
+
 
                         //insert user into database
-//                       if ($pdoExec){}
                         $pdoQuery_users =  "INSERT INTO users(USER_first, USER_last, USER_email, USER_uid, USER_pwd) VALUES (:USER_first, :USER_last, :USER_email, :USER_uid, :USER_pwd)";
 
                         $pdoResult = $database->prepare($pdoQuery_users);
@@ -63,15 +69,8 @@ if (isset($_POST['submit'])) {
         }
 
     }
-}else{
-
 }
 ?>
-<?php
-session_start();
-?>
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -91,12 +90,12 @@ session_start();
             </div>
             <div class="nav-login">
                 <?php
-                if (isset($_SESSION['u_id'])){
+                if (isset($_SESSION['username'])){
                     echo '   <form action="logout.inc.php" method="post">
                              <button type="submit" name="submit">Logout</button>
                              </form>';
                 }else{
-                    echo '<form action="login.inc.php" method="POST">
+                    echo '<form action="../index.php" method="POST">
                     <input type="text" name="uid" placeholder="username/email">
                     <input type="password" name="pwd" placeholder="password">
                     <button type="submit" name="submit">Login</button>
@@ -143,11 +142,11 @@ session_start();
         }
         if ($_GET['signup'] == 'email')
         {
-            echo '<h5>this email is invalid.</h5>';
+            echo '<h5>the email or username is invalid or already taken.</h5>';
         }
        ?>
 
-        <p>Bij het registeren gaat u akkoord met de <a href="Terms.php" class="Termslink">algemene voorwaarden</a></p>
+        <p>Bij het registeren gaat u akkoord met de <a href="../Terms.php" class="Termslink">algemene voorwaarden</a></p>
     </div>
 
 <?php

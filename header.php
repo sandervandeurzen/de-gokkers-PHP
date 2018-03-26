@@ -28,7 +28,7 @@ session_start();
                              <button type="submit" name="submit">Logout</button>
                              </form>';
                  }else{
-                     echo '<form action="includes/login.inc.php" method="POST">
+                     echo '<form action="index.php" method="POST">
                     <input type="text" name="uid" placeholder="username/email">
                     <input type="password" name="pwd" placeholder="password">
                     <button type="submit" name="submit">Login</button>
